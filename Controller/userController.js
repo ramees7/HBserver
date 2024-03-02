@@ -7,17 +7,19 @@ const docters = require('../Models/docterSchema');
 const appoinments = require('../Models/appoinmentsListSchema');
 
 exports.register = async (req, res) => {
-    console.log("Inside Registration");
+    console.log("Inside User Registration");
     const { username, email, password, phone } = req.body
     // console.log(username,email,password,phone);
     try {
         const existingUser = await users.findOne({ email })
+        const existingAdmin =await admins.findOne({email})
         console.log("Already Existing Data :", existingUser)
-        if (existingUser) {
+        console.log("Already Existing Data :", existingAdmin)
+        if (existingUser || existingAdmin) {
             res.status(406).json("Existing User! Please Enter Different Email")
         }
         else{
-            const newUser = new users({ username, email, password, phone ,firstname:"" ,lastname:"" ,dob:"" ,gender:"" ,address:"" ,user_image:""})
+            const newUser = new users({ username, email, password, phone ,firstname:"" ,lastname:""  ,gender:"" ,address:"" ,user_image:""})
             await newUser.save()
             res.status(200).json(newUser)
             console.log(newUser);
@@ -81,12 +83,12 @@ exports.getAppoinmentListUser=async(req,res)=>{
 }
 
 exports.updateProfile=async(req,res)=>{
-    const {username, email, password, phone,firstname,lastname,dob,gender,address}=req.body
+    const {username, email, password, phone,firstname,lastname,gender,address}=req.body
     const {id}=req.params
     const updated_image =req.file?req.file.filename: req.body.user_image
     try{
         console.log("inside the update profile");
-        const result=await users.findByIdAndUpdate({_id:id},{username, email, password, phone,firstname,lastname,dob,gender,address,user_image:updated_image})
+        const result=await users.findByIdAndUpdate({_id:id},{username, email, password, phone,firstname,lastname,gender,address,user_image:updated_image})
         res.status(200).json(result)
         console.log(result);
     }
@@ -94,3 +96,4 @@ exports.updateProfile=async(req,res)=>{
         res.status(401).json(err)
     }
 }
+

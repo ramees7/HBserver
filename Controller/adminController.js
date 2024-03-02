@@ -13,8 +13,10 @@ exports.adminRegister = async (req, res) => {
     // console.log(username,email,password,phone);
     try {
         const existingAdmin = await admins.findOne({ email })
+        const existingUser = await users.findOne({ email })
+        console.log("Already Existing Data :", existingUser)
         console.log("Already Existing Data :", existingAdmin)
-        if (existingAdmin) {
+        if (existingAdmin || existingUser) {
             res.status(406).json("Existing User! Please Enter Different Email")
         }
         else{
@@ -71,8 +73,19 @@ exports.getDocterRequest=async(req,res)=>{
 
 exports.getDocterAccepted=async(req,res)=>{
     console.log("Inside Get Docter");
+    const SearchKey=req.query.search
+    console.log(req.query)
+    const query={
+        $or:[
+            {firstname:{$regex: SearchKey,$options:"i"}},
+            {lastname:{$regex: SearchKey,$options:"i"}},
+            {department:{$regex: SearchKey,$options:"i"}}
+        ]
+    }
+
     try{
-        const result=await docters.find({status:"Accepted"})
+        // const result=await docters.find({status:"Accepted"})
+        const result=await docters.find( {status:"Accepted"} && query )
         console.log(result);
         res.status(200).json(result)
     }
@@ -80,6 +93,27 @@ exports.getDocterAccepted=async(req,res)=>{
         res.status(401).json(err)
     }
 }
+
+// exports.searchDocters=async(req,res)=>{
+//     console.log("Inside Docter Search")
+    // const SearchKey=req.query.search
+    // console.log(req.query)
+//     const query={
+//         $or:[
+//             {firstname:{$regex: SearchKey,$options:"i"}},
+//             {lastname:{$regex: SearchKey,$options:"i"}},
+//             {department:{$regex: SearchKey,$options:"i"}}
+//         ]
+//     }
+//     try{
+//         const result=await docters.find(query)
+//         console.log(result)
+//         res.status(200).json(result)
+//     }
+//     catch(err){
+//         res.status(401).json (err)
+//     }
+// }
 
 exports.getUsersList=async(req,res)=>{
     console.log("Inside Get User List");
