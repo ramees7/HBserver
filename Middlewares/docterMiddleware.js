@@ -11,12 +11,12 @@ const storage=multer.diskStorage({
 })
 
 const fileFilter=(req,file,callback)=>{
-    if(file.mimetype==='image/png' || file.mimetype==='image/jpeg' || file.mimetype==="image/jpg"){
+    if(file.mimetype==='image/png' || file.mimetype==='image/jpeg' || file.mimetype==="image/jpg" || file.mimetype==='image/avif' || file.mimetype==="image/webp"){
         callback(null,true)
     }
     else{
         callback(null,false)
-        return callback(new Error('only .png , .jpg , .jpeg allowed'))
+        return callback(new Error('only .png , .jpg , .jpeg,.avif ,.webp allowed'))
     }
 }
 

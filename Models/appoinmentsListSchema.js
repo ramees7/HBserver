@@ -39,6 +39,14 @@ const appoinmentListSchema=new mongoose.Schema({
     tokenNo:{
         type:String,
         required:true
+    },
+    payment:{
+        type:String,
+        required:true
+    },
+    docterId:{
+        type:String,
+        required:true
     }
 })
 const appoinments = mongoose.model('appoinments',appoinmentListSchema)

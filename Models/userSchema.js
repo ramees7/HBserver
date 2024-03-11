@@ -26,9 +26,6 @@ const userSchema = new mongoose.Schema({
     lastname:{
         type:String
     },
-    // dob:{
-    //     type:String
-    // },
     gender:{
         type:String
     },
