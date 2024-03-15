@@ -93,6 +93,21 @@ exports.getDocterAccepted=async(req,res)=>{
     }
 }
 
+exports.getRequestAcceptedNotification=async(req,res)=>{
+    console.log("Docter Notifications")
+    try{
+        const result=await docters.find({$or:[
+            {messages:"Request has been Approved" },
+            {messages: "Request has been Rejected"}
+        ]})
+        console.log(result)
+        res.status(200).json(result)
+    }
+    catch(err){
+        res.status(401).json(err)
+    }
+}
+
 
 exports.getUsersList=async(req,res)=>{
     console.log("Inside Get User List");
@@ -179,14 +194,14 @@ exports.deleteAppoinment=async(req,res)=>{
 
 //when accept/reject docter application
 exports.updateDocters=async(req,res)=>{
-    const {firstname, lastname, email, phone, dob, address, department,education, experience, fee, userId, status }=req.body
+    const {firstname, lastname, email, phone, dob, address, department,education, experience, fee, userId, status ,messages}=req.body
     const {id}=req.params
     const uploadFile = req.file?req.file.filename:req.body.dr_image
 
     console.log(id)
     try{
         console.log("Inside update Docters")
-        const result=await docters.findByIdAndUpdate({_id:id},{firstname, lastname, email, phone, dob, address, department,education, experience, fee,dr_image:uploadFile, userId, status })
+        const result=await docters.findByIdAndUpdate({_id:id},{firstname, lastname, email, phone, dob, address, department,education, experience, fee,dr_image:uploadFile, userId, status ,messages})
         res.status(200).json(result)
         console.log(result);
     }

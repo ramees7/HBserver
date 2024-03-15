@@ -66,3 +66,4 @@ exports.deletDepartment = async (req, res) => {
         res.status(401).json(err)
     }
 }
+

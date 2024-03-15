@@ -56,6 +56,10 @@ const docterSchema=new mongoose.Schema({
     status:{
         type:String,
         required:true
+    },
+    messages:{
+        type:String,
+        requird:true
     }
 })
 

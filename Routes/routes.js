@@ -32,6 +32,7 @@ router.delete('/admin/deletedept/:id',jwtMiddleware,catagoryController.deletDepa
 router.post('/admin/adddocter',jwtMiddleware,multerConfig.single('dr_image'),docterController.addDocter)
 router.get('/admin/getdocterrequest',jwtMiddleware,adminController.getDocterRequest)
 router.get('/admin/getdocteraccepted',jwtMiddleware,adminController.getDocterAccepted)
+router.get('/admin/getdocteracceptednotification',jwtMiddleware,adminController.getRequestAcceptedNotification)
 // router.get('/admin/getdocterrequest',jwtMiddleware,adminController.getDocterRequest)
 router.get('/admin/getuserslist',jwtMiddleware,adminController.getUsersList)
 router.get('/admin/getadminslist',jwtMiddleware,adminController.getAdminsList)
